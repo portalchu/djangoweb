@@ -1,0 +1,60 @@
+{% extends './base.html'%}
+{% load static %}
+{% block container %}
+	<div id="container">
+		<!-- location_area -->
+		<div class="location_area customer">
+			<div class="box_inner">
+				<h2 class="tit_page">TOURIST <span class="in">in</span> TOUR</h2>
+				<p class="location">고객센터 <span class="path">/</span> 공지사항</p>
+				<ul class="page_menu clear">
+					<li><a href="#" class="on">공지사항</a></li>
+					<li><a href="#">문의하기</a></li>
+				</ul>
+			</div>
+		</div>	
+		<!-- //location_area -->
+
+		<!-- bodytext_area -->
+		<div class="bodytext_area box_inner">			
+			<ul class="bbsview_list">
+				<li class="bbs_title">{{notice.title}}</li>
+				<li class="bbs_hit">작성일 : <span>{{notice.create_date | date:'Y/m/d H:i:s'}}</span></li>
+				<li class="bbs_date">조회수 : <span>{{notice.views}}</span></li>
+				<li class="bbs_content">
+					<div class="editer_content">
+					<pre>{{notice.contents}}</pre>
+                    </div>
+				</li>
+			</ul>
+			<p class="btn_line txt_right">
+				<!-- <form action="/notice/remove/{{notice.id}}" name="remove" method="POST">
+					{% csrf_token %}
+					<button class="btn_bbs" onclick="onRemoveClick()">글삭제</button>
+				</form> -->
+				<a href="#" class="btn_bbs" onclick="onRemoveClick({{notice.id}})">글삭제</a>
+				<a href="/notice" class="btn_bbs">목록</a>
+			</p>
+			<ul class="near_list mt20">
+				<li><h4 class="prev">다음글</h4><a href="javascript:;">추석 연휴 티켓/투어 배송 및 직접 수령 안내</a></li>		
+				<li><h4 class="next">이전글</h4><a href="javascript:;">이번 여름 휴가 제주 갈까? 미션 투어 (여행경비 50만원 지원)</a></li>
+			</ul>
+		</div>
+		<!-- //bodytext_area -->
+		<form method="post" id="rForm" name="rForm">{% csrf_token %}</form>
+	</div>
+	<!-- //container -->
+	
+	<script>
+		function onRemoveClick(id){
+			if (confirm('정말 삭제 하시겠습니까?')){
+				// document.rForm.setAttribute("action","/notice/remove/"+id);
+				// document.rForm.submit();
+				let form = document.querySelector("#rForm");
+				form.setAttribute("action", "/notice/remove/"+id);
+				form.submit();
+			}
+			return false;
+		}
+	</script>
+	{% endblock container %}
