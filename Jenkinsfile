@@ -19,7 +19,7 @@ spec:
     }
     environment { 
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
-        DOCKER_IMAGE = 'ahn1492/djangotour'
+        DOCKER_IMAGE = 'ahn1492/python-django:1.0'
     }
 
     stages {
