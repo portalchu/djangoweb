@@ -12,6 +12,13 @@ pipeline {
                 git url 'https://github.com/portalchu/djangoweb.git'
             }
         }
+        stage('Docker Build') {
+            steps {
+                script {
+                    dockerimage = docker.build("giry0612/djangotour")
+                }
+            }
+        }
         stage('Docker Image Build') {
             steps {
                 echo 'Docker Image Build'
