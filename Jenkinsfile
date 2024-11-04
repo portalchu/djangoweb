@@ -32,53 +32,41 @@ spec:
                 }
             }
         }
-        stage('Docker Build') {
-            steps {
-                script {
-                    container('docker') {
-                        dockerimage = docker.build("giry0612/djangotour")
-                    }
-                }
-            }
-        }
         stage('Docker Image Build') {
             steps {
-                echo 'Docker Image Build'
-                dir("${env.WORKSPACE}") {
-                    sh """
-                    docker build -t giry0612/djangotour:$BUILD_NUMBER .
-                    docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
-                    """
+                container('docker') {                
+                    echo 'Docker Image Build'
+                    dir("${env.WORKSPACE}") {
+                        sh """
+                        docker build -t giry0612/djangotour:$BUILD_NUMBER .
+                        docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
+                        """
+                    }
                 }
             }
         }
         stage('Docker Login') {
             steps {
-                // docker hub 로그인
-                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                container('docker') { 
+                    echo 'Docker Login'
+                    // docker hub 로그인
+                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                }
             }
         }
         stage('Docker Image Push') {
             steps {
+                container('docker') {
                 echo 'Docker Image Push'
-                sh 'docker push giry0612/djangotour:latest'
-            }
-        }
-        stage('Cleaning up') { 
-            steps { 
-                // docker image 제거
-                echo 'Cleaning up unused Docker images on Jenkins server'
-                sh """
-                docker rmi giry0612/djangotour:$BUILD_NUMBER
-                docker rmi giry0612/djangotour:latest
-                """
+                sh "docker push giry0612/djangotour:$BUILD_NUMBER"
+                }
             }
         }
         stage('Deploy to Kubernetes') {
             steps {
                 dir("${env.WORKSPACE}") {
                     sh """
-                    kubectl apply -f django.yml
+                    kubectl set image deployment django django-app=giry0612/djangotour:$BUILD_NUMBER --record
                     """
                 }
             }
