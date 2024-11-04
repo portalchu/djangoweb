@@ -64,10 +64,8 @@ spec:
         }
         stage('Deploy to Kubernetes') {
             steps {
-                dir("${env.WORKSPACE}") {
-                    sh """
-                    kubectl set image deployment django django-app=giry0612/djangotour:$BUILD_NUMBER --record
-                    """
+                withKubeConfig([namespace: 'default']) {
+                    sh "kubectl set image deployment django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
                 }
             }
         }
