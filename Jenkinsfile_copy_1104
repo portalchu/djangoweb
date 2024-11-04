@@ -10,11 +10,24 @@ metadata:
     some-label: "build-app-${BUILD_NUMBER}"
 spec:
   containers:
-  - name: docker
-    image: docker:latest
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:v1.5.1-debug
+    imagePullPolicy: IfNotPresent
     command:
-    - cat
+    - /busybox/cat
     tty: true
+    volumeMounts:
+      - name: jenkins-docker-cfg
+        mountPath: /kaniko/.docker
+  volumes:
+  - name: jenkins-docker-cfg
+    projected:
+      sources:
+      - secret:
+          name: docker-credentials
+          items:
+            - key: .dockerconfigjson
+              path: config.json
 """
         } 
     }
@@ -26,19 +39,15 @@ spec:
     stages {
         stage('Git Clone') {
             steps {
-                container('docker') {
-                    echo 'Git Clone'
-                    git url: 'https://github.com/portalchu/djangoweb.git', branch: 'main'
-                    //credentialsId: 'gitToken'                
-                }
+                echo 'Git Clone'
+                git url: 'https://github.com/portalchu/djangoweb.git', branch: 'main'
+                //credentialsId: 'gitToken'
             }
         }
         stage('Docker Build') {
             steps {
                 script {
-                    container('docker') {
-                        dockerimage = docker.build("giry0612/djangotour")
-                    }
+                    dockerimage = docker.build("giry0612/djangotour")
                 }
             }
         }
