@@ -1,5 +1,5 @@
 FROM python
-RUN apt update -y && apt upgarde -y
+RUN apt update -y && apt upgrade -y
 RUN apt install python3 python3-pip git -y
 RUN apt install pkg-config -y
 RUN pip install mysqlclient
