@@ -1,32 +1,5 @@
 pipeline {
-    agent {
-        kubernetes {
-            yaml """
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: django
-spec:
-  selector:
-    matchLabels:
-      app: django-app
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: django-app
-    spec:
-      containers:
-        - name: django-app
-          image: ahn1492/djangotour:latest
-          ports:
-            - containerPort: 8000
-          command: ["sh"]
-          args:
-            - /djangoweb/mysite/django.sh
-            """
-        }
-    }
+    agent any
     environment { 
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
         DOCKER_IMAGE = 'ahn1492/djangotour'
