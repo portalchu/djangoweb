@@ -12,9 +12,8 @@ spec:
   containers:
   - name: docker
     image: docker:dind
-    command:
-    - cat
-    tty: true
+    securityContext:
+      privileged: true
 """
         } 
     }
