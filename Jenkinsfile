@@ -52,12 +52,6 @@ pipeline {
                     kubectl apply -f django.yml
                     """
                 }
-                script {
-                    // Kubernetes Deployment 업데이트
-                    //sh 'kubectl set image deployment/my-django-app my-django-app=your-dockerhub-username/my-django-app:latest -n <namespace>'
-                    // Rollout 상태 확인
-                    //sh 'kubectl rollout status deployment/my-django-app -n <namespace>'
-                }
             }
         }
     }
