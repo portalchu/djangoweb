@@ -14,16 +14,13 @@ podTemplate(
     }
     node('deploy') {
         stage('Git Clone') {
-            steps {
                 container('docker') {
                     echo 'Git Clone'
                     git url: 'https://github.com/portalchu/djangoweb.git', branch: 'main'
                     //credentialsId: 'gitToken'                
                 }
-            }
         }
         stage('Docker Image Build') {
-            steps {
                 container('docker') {                
                     dir("${env.WORKSPACE}") {
                         echo 'Docker Image Build'
@@ -33,27 +30,21 @@ podTemplate(
                         //"""
                     }
                 }
-            }
         }
         stage('Docker Login') {
-            steps {
                 container('docker') { 
                     echo 'Docker Login'
                     // docker hub 로그인
                     //sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 }
-            }
         }
         stage('Docker Image Push') {
-            steps {
                 container('docker') {
                 echo 'Docker Image Push'
                 //sh "docker push giry0612/djangotour:$BUILD_NUMBER"
                 }
-            }
         }
         stage('Deploy to Kubernetes') {
-            steps {
                 //withKubeConfig([credentialsId: '94b3c173-9c2c-4b0f-babe-5945cb502227', namespace: 'default']) {
                 container('kubectl') {
                 echo 'Deploy to Kubernetes'
@@ -64,7 +55,6 @@ podTemplate(
                 sh "kubectl get all -n jenkins"
                 sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
                 }
-            }
         }
 
     }
