@@ -8,4 +8,4 @@ FROM ahn1492/python-django:1.0
 #RUN pip install django
 COPY ./ .
 EXPOSE 8000
-#ENTRYPOINT ["sh","mysite/django3.sh"]
+ENTRYPOINT ["sh","mysite/django3.sh"]
