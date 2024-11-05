@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        Kubernetes {
+        kubernetes {
             label 'build'
             yaml"""
 apiVersion: v1
