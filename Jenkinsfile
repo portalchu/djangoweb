@@ -3,8 +3,8 @@ podTemplate(
     label: 'test', 
     containers: [
         //container image는 docker search 명령 이용
-        containerTemplate(name: "docker", image: "docker:latest", ttyEnabled: true),
-        containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", ttyEnabled: true)
+        containerTemplate(name: "docker", image: "docker:latest", ttyEnabled: true, securityContext:(privileged: true)),
+        containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", ttyEnabled: true, securityContext:(privileged: true))
     ]
 ) 
 {
