@@ -5,7 +5,9 @@ pipeline {
 apiVersion: v1
 kind: Pod
 metadata:
-  name: build
+  labels:
+    jenkins-build: app-build
+    some-label: "build-app-${BUILD_NUMBER}"
 spec:
   containers:
   - name: docker
@@ -14,12 +16,9 @@ spec:
     securityContext:
       privileged: true
   - name: kubectl
-    image: bitnami/kubectl:latest
+    image: lachlanevenson/k8s-kubectl
     tty: true
-    command: 
-    - "sh"
-    - "-c"
-    - "while true; do sleep 3600; done"
+    command: 'cat'
 """
         }
     }
@@ -40,11 +39,11 @@ spec:
             steps {
                 container('docker') {
                     dir("${env.WORKSPACE}") {
-                        echo 'Docker Image Build'
-                        sh """
-                        docker build -t giry0612/djangotour:$BUILD_NUMBER .
-                        docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
-                        """
+                        //echo 'Docker Image Build'
+                        //sh """
+                        //docker build -t giry0612/djangotour:$BUILD_NUMBER .
+                        //docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
+                        //"""
                     }
                 }
             }
@@ -52,16 +51,16 @@ spec:
         stage('Docker Login') {
             steps {
                 container('docker') { 
-                    echo 'Docker Login'
-                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    //echo 'Docker Login'
+                    //sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 }
             }
         }
         stage('Docker Image Push') {
             steps {
                 container('docker') {
-                    echo 'Docker Image Push'
-                    sh "docker push giry0612/djangotour:$BUILD_NUMBER"
+                    //echo 'Docker Image Push'
+                    //sh "docker push giry0612/djangotour:$BUILD_NUMBER"
                 }
             }
         }
