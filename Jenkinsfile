@@ -1,7 +1,6 @@
 pipeline {
     agent {
         kubernetes {
-            label 'build'
             yaml"""
 apiVersion: v1
 kind: Pod
@@ -11,7 +10,7 @@ metadata:
 spec:
   containers:
   - name: docker
-    image: docker:latest
+    image: docker:dind
     tty: true
     securityContext:
       privileged: true
