@@ -69,6 +69,7 @@ spec:
             steps {
                 container('kubectl') {
                     echo 'Deploy to Kubernetes'
+                    sh "kubectl get all -n jenkins"
                     sh "kubectl set image deployment/django django-app=giry0612/djangotour:10 -n jenkins --record"
                 }
             }
