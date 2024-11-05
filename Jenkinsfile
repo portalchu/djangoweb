@@ -4,7 +4,7 @@ podTemplate(
     containers: [
         //container image는 docker search 명령 이용
         containerTemplate(name: "docker", image: "docker:latest", ttyEnabled: true, command: "cat"),
-        containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", command: "cat", ttyEnabled: true, namespace: "default")
+        containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", command: "cat", ttyEnabled: true)
     ]
 ) 
 {
@@ -53,7 +53,7 @@ podTemplate(
                 sh "kubectl patch --help"
                 sh "kubectl diff --help"
                 sh "kubectl get all -n default"
-                sh "kubectl set image deployment/django django-app=giry0612/djangotour:14 --record"
+                sh "kubectl set image deployment/django django-app=giry0612/djangotour:14 -n default --record"
                 }
         }
 
