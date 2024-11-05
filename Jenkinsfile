@@ -1,6 +1,6 @@
 #!groovy
 podTemplate(
-    label: 'deploy', 
+    label: 'test', 
     containers: [
         //container image는 docker search 명령 이용
         containerTemplate(name: "docker", image: "docker:latest", ttyEnabled: true, command: "cat"),
@@ -12,7 +12,7 @@ podTemplate(
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
         DOCKER_IMAGE = 'ahn1492/python-django:1.0'
     }
-    node('deploy') {
+    node('test') {
         stage('Git Clone') {
                 container('docker') {
                     echo 'Git Clone'
