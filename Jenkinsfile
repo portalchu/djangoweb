@@ -18,7 +18,8 @@ spec:
   - name: kubectl
     image: lachlanevenson/k8s-kubectl
     tty: true
-    command: 'cat'
+    command:
+    - cat
 """
         }
     }
