@@ -6,6 +6,6 @@ FROM ahn1492/python-django:1.0
 #RUN rm /usr/lib/python3.14/EXTERNALLY-MANAGED
 #RUN pip install mysqlclient
 #RUN pip install django
-COPY ./mysite .
+COPY ./ .
 EXPOSE 8000
-ENTRYPOINT ["sh","django3.sh"]
+#ENTRYPOINT ["sh","mysite/django3.sh"]
