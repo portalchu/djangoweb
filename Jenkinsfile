@@ -14,14 +14,6 @@ spec:
     image: docker:dind
     securityContext:
       privileged: true
----
-apiVersion: v1
-kind: Pod
-metadata:
-  labels:
-    jenkins-build: app-build
-    some-label: "build-app-${BUILD_NUMBER}"
-spec:
   containers:
   - name: kubectl
     image: lachlanevenson/k8s-kubectl
