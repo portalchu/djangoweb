@@ -5,8 +5,7 @@ pipeline {
 apiVersion: v1
 kind: Pod
 metadata:
-  labels:
-    build: 'jenkins'
+  name: build
 spec:
   containers:
   - name: docker
@@ -15,8 +14,12 @@ spec:
     securityContext:
       privileged: true
   - name: kubectl
-    image: lachlanevenson/k8s-kubectl
+    image: bitnami/kubectl:latest
     tty: true
+    command: 
+    - "sh"
+    - "-c"
+    - "while true; do sleep 3600; done"
 """
         }
     }
