@@ -1,4 +1,4 @@
-FROM ahn1492/python-django:1.0
+FROM ahn1492/djangotour
 #RUN apt update -y && apt upgrade -y
 #RUN apt install python3 python3-pip git -y
 #RUN apt install pkg-config -y
