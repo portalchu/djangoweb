@@ -70,7 +70,8 @@ spec:
                 container('kubectl') {
                     echo 'Deploy to Kubernetes'
                     sh "kubectl get all -n jenkins"
-                    sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
+                    sh "kubectl get all -n default"
+                    sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER -n default --record"
                 }
             }
         }
