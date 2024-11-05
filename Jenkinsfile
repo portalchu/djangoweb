@@ -6,7 +6,8 @@ pipeline {
 apiVersion: v1
 kind: Pod
 metadata:
-  label: build
+  labels:
+    build: 'jenkins'
 spec:
   containers:
   - name: docker
@@ -17,8 +18,6 @@ spec:
   - name: kubectl
     image: lachlanevenson/k8s-kubectl
     tty: true
-    securityContext:
-      privileged: true
 """
         }
     }
