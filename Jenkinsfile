@@ -4,7 +4,7 @@ podTemplate(
     containers: [
         //container image는 docker search 명령 이용
         containerTemplate(name: "docker", image: "docker:latest", ttyEnabled: true, command: "cat"),
-        containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", command: "cat", ttyEnabled: true)
+        containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", command: "cat", ttyEnabled: true, namespace: "default")
     ]
 ) 
 {
