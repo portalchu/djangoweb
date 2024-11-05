@@ -70,9 +70,10 @@ spec:
             steps {
                 withKubeConfig([credentialsId: '94b3c173-9c2c-4b0f-babe-5945cb502227', namespace: 'default']) {
                     echo 'Deploy to Kubernetes'
-                    sh "kubectl get --help"
-                    sh "kubectl set --help"
-                    sh "kubectl get all -n jenkins"
+                    sh "kubectl apply --help"
+                    sh "kubectl replace --help"
+                    sh "kubectl patch --help"
+                    sh "kubectl diff --help"
                     sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
                 //container('kubectl') {
                 //echo 'Deploy to Kubernetes'
