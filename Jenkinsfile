@@ -11,15 +11,11 @@ spec:
   containers:
   - name: docker
     image: docker:latest
-    command:
-    - cat
     tty: true
     securityContext:
       privileged: true
   - name: kubectl
     image: lachlanevenson/k8s-kubectl
-    command:
-    - cat
     tty: true
     securityContext:
       privileged: true
