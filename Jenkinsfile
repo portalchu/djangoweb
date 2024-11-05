@@ -1,5 +1,3 @@
-pipeline {
-
     podTemplate(
         label: label, 
         containers: [
@@ -9,6 +7,7 @@ pipeline {
         ]
     ) 
 
+pipeline {
     environment { 
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
         DOCKER_IMAGE = 'ahn1492/python-django:1.0'
