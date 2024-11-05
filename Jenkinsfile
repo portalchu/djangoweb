@@ -1,18 +1,18 @@
-    podTemplate(
-        label: label, 
-        containers: [
-            //container image는 docker search 명령 이용
-            containerTemplate(name: "docker", image: "docker:latest", ttyEnabled: true, command: "cat"),
-            containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", command: "cat", ttyEnabled: true)
-        ]
-    ) 
-
-pipeline {
+#!groovy
+podTemplate(
+    label: 'deploy', 
+    containers: [
+        //container image는 docker search 명령 이용
+        containerTemplate(name: "docker", image: "docker:latest", ttyEnabled: true, command: "cat"),
+        containerTemplate(name: "kubectl", image: "lachlanevenson/k8s-kubectl", command: "cat", ttyEnabled: true)
+    ]
+) 
+{
     environment { 
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
         DOCKER_IMAGE = 'ahn1492/python-django:1.0'
     }
-    node(label) {
+    node('deploy') {
         stages {
             stage('Git Clone') {
                 steps {
