@@ -71,7 +71,7 @@ spec:
                 //    sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
                 //}
             steps {
-                container('kubectl', shell: '/bin/sh') {
+                container('kubectl') {
                 echo 'Deploy to Kubernetes'
                 sh "kubectl get all -n jenkins"
                 sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
