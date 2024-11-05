@@ -66,19 +66,17 @@ spec:
                 }
             }
         }
-        node {
-                    stage('Deploy to Kubernetes') {
+        stage('Deploy to Kubernetes') {
                 //withKubeConfig([serverUrl: 'https://kubernetes.default',namespace: 'default']) {
                 //    sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
                 //}
             steps {
-                container('kubectl') {
+                container('kubectl', shell: '/bin/sh') {
                 echo 'Deploy to Kubernetes'
                 sh "kubectl get all -n jenkins"
                 sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
                 }
             }
-        }
         }
     }
 }
