@@ -14,6 +14,18 @@ spec:
     image: docker:dind
     securityContext:
       privileged: true
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    jenkins-build: app-build
+    some-label: "build-app-${BUILD_NUMBER}"
+spec:
+  containers:
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl
+    tty: true
 """
         } 
     }
@@ -35,12 +47,12 @@ spec:
         stage('Docker Image Build') {
             steps {
                 container('docker') {                
-                    echo 'Docker Image Build'
                     dir("${env.WORKSPACE}") {
-                        sh """
-                        docker build -t giry0612/djangotour:$BUILD_NUMBER .
-                        docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
-                        """
+                        echo 'Docker Image Build'
+                        //sh """
+                        //docker build -t giry0612/djangotour:$BUILD_NUMBER .
+                        //docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
+                        //"""
                     }
                 }
             }
@@ -50,7 +62,7 @@ spec:
                 container('docker') { 
                     echo 'Docker Login'
                     // docker hub 로그인
-                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    //sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 }
             }
         }
@@ -58,14 +70,19 @@ spec:
             steps {
                 container('docker') {
                 echo 'Docker Image Push'
-                sh "docker push giry0612/djangotour:$BUILD_NUMBER"
+                //sh "docker push giry0612/djangotour:$BUILD_NUMBER"
                 }
             }
         }
         stage('Deploy to Kubernetes') {
+                //withKubeConfig([serverUrl: 'https://kubernetes.default',namespace: 'default']) {
+                //    sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
+                //}
             steps {
-                withKubeConfig([namespace: 'default']) {
-                    sh "kubectl set image deployment django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
+                container('kubectl') {
+                echo 'Deploy to Kubernetes'
+                sh "kubectl get all -n jenkins"
+                sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
                 }
             }
         }
