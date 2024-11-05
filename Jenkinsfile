@@ -53,6 +53,7 @@ podTemplate(
                 sh "kubectl patch --help"
                 sh "kubectl patch deployment --help"
                 sh "kubectl diff --help"
+                sh "kubectl set image --help"
                 sh "kubectl get all"
                 sh "kubectl get all -n jenkins"
                 sh "kubectl get all -n default"
