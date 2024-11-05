@@ -54,10 +54,10 @@ podTemplate(
                 sh "kubectl patch deployment --help"
                 sh "kubectl diff --help"
                 sh "kubectl set image --help"
-                sh "kubectl get all"
-                sh "kubectl get all -n jenkins"
-                sh "kubectl get all -n default"
-                sh "kubectl set image deployment/django django-app=giry0612/djangotour:14 -n default --record"
+                //sh "kubectl get all"
+                //sh "kubectl get all -n jenkins"
+                //sh "kubectl get all -n default"
+                sh "kubectl set image deployment/django django-app=giry0612/djangotour:10 -n jenkins --record"
                 }
         }
 
