@@ -1,27 +1,35 @@
-#!groovy
-podTemplate(
-    label: 'test', 
-    containers: [
-        //container image는 docker search 명령 이용
-        containerTemplate(
-            name: "docker", 
-            image: "docker:latest", 
-            ttyEnabled: true, 
-            securityContext: [privileged: true]
-        ),
-        containerTemplate(
-            name: "kubectl", 
-            image: "lachlanevenson/k8s-kubectl", 
-            ttyEnabled: true, 
-            securityContext: [privileged: true]
-        )
-    ]
-) 
-{
+pipeline {
+    agent {
+        Kubernetes {
+            label 'build'
+            yaml"""
+apiVersion: v1
+kind: Pod
+metadata:
+  label: build
+spec:
+  containers:
+  - name: docker
+    image: docker:latest
+    command:
+    - cat
+    tty: true
+    securityContext:
+      privileged: true
+  - name: kubectl
+    image: lachlanevenson/k8s-kubectl
+    command:
+    - cat
+    tty: true
+    securityContext:
+      privileged: true
+"""
+        }
+    }
     environment { 
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
     }
-    node('test') {
+    stages {
         stage('Git Clone') {
                 container('docker') {
                     echo 'Git Clone'
