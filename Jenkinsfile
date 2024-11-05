@@ -52,7 +52,8 @@ podTemplate(
                 sh "kubectl replace --help"
                 sh "kubectl patch --help"
                 sh "kubectl diff --help"
-                sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
+                sh "kubectl get all -n default"
+                sh "kubectl set image deployment/django django-app=giry0612/djangotour:14 --record"
                 }
         }
 
