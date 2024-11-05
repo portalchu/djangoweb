@@ -40,11 +40,11 @@ spec:
             steps {
                 container('docker') {
                     dir("${env.WORKSPACE}") {
-                        //echo 'Docker Image Build'
-                        //sh """
-                        //docker build -t giry0612/djangotour:$BUILD_NUMBER .
-                        //docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
-                        //"""
+                        echo 'Docker Image Build'
+                        sh """
+                        docker build -t giry0612/djangotour:$BUILD_NUMBER .
+                        docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
+                        """
                     }
                 }
             }
@@ -52,16 +52,16 @@ spec:
         stage('Docker Login') {
             steps {
                 container('docker') { 
-                    //echo 'Docker Login'
-                    //sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    echo 'Docker Login'
+                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 }
             }
         }
         stage('Docker Image Push') {
             steps {
                 container('docker') {
-                    //echo 'Docker Image Push'
-                    //sh "docker push giry0612/djangotour:$BUILD_NUMBER"
+                    echo 'Docker Image Push'
+                    sh "docker push giry0612/djangotour:$BUILD_NUMBER"
                 }
             }
         }
