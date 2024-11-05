@@ -66,11 +66,9 @@ spec:
                 }
             }
         }
-    }
-    node {
         stage('Deploy to Kubernetes') {
             steps {
-                withKubeConfig([namespace: 'default']) {
+                withKubeConfig([credentialsId: '94b3c173-9c2c-4b0f-babe-5945cb502227', namespace: 'default']) {
                     echo 'Deploy to Kubernetes'
                     sh "kubectl get all -n jenkins"
                     sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER --record"
