@@ -1,5 +1,9 @@
 pipeline {
     agent {
+        // 배포에 사용할 Pod 정보
+        // 배포를 시작하면 자동으로 실행되며 배포가 끝나면 자동으로 제거된다.
+        // docker는 docker 빌드 및 push 작업을 위해 사용
+        // kubectl은 kubernetes 동작을 위한 명령어 전달용 
         kubernetes { 
             yaml"""
 apiVersion: v1
