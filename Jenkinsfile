@@ -62,6 +62,7 @@ spec:
                 container('docker') {
                     echo 'Docker Image Push'
                     sh "docker push giry0612/djangotour:$BUILD_NUMBER"
+                    sh "docker push giry0612/djangotour:latest"
                 }
             }
         }
@@ -69,8 +70,6 @@ spec:
             steps {
                 container('kubectl') {
                     echo 'Deploy to Kubernetes'
-                    sh "kubectl get all -n jenkins"
-                    sh "kubectl get all -n default"
                     sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER -n default --record"
                 }
             }
