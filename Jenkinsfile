@@ -17,11 +17,13 @@ spec:
   - name: docker
     image: docker:dind
     tty: true
-    securityContext:    #
+    securityContext:
       privileged: true
   - name: kubectl
     image: lachlanevenson/k8s-kubectl
     tty: true
+    securityContext:
+      privileged: true
     command:
     - cat
 """
