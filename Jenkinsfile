@@ -19,9 +19,6 @@ spec:
       privileged: true
   - name: kubectl
     image: bitnami/kubectl:latest
-    tty: true
-    command:
-    - cat
 """
         }
     }
