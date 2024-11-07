@@ -20,10 +20,6 @@ spec:
   - name: kubectl
     image: bitnami/kubectl:latest
     tty: true
-    securityContext:
-      privileged: true
-    command:
-    - cat
 """
         }
     }
