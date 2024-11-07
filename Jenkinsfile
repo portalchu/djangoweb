@@ -39,8 +39,7 @@ spec:
             steps {
                 container('docker') {   // 위에서 생성한 Pod의 docker 컨테이너에서 실행
                     echo 'Git Clone'    // WebHook을 위해 gitToken 사용했으며 Credential 설정 필요
-                    git url: 'https://github.com/portalchu/djangoweb.git', branch: 'main',
-                    credentialsId: 'gitToken'                
+                    git url: 'https://github.com/portalchu/djangoweb.git', branch: 'main'              
                 }
             }
         }
@@ -49,10 +48,10 @@ spec:
                 container('docker') {
                     dir("${env.WORKSPACE}") {
                         echo 'Docker Image Build'   // GitHub에 있는 Dockerfile을 빌드
-                        sh """
-                        docker build -t giry0612/djangotour:$BUILD_NUMBER .
-                        docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
-                        """
+                        //sh """
+                        //docker build -t giry0612/djangotour:$BUILD_NUMBER .
+                        //docker tag giry0612/djangotour:$BUILD_NUMBER giry0612/djangotour:latest
+                        //"""
                     }
                 }
             }
@@ -61,7 +60,7 @@ spec:
             steps {
                 container('docker') { 
                     echo 'Docker Login'     // Docker Hub에 올리기 위해 로그인 필요
-                    sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    //sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
                 }
             }
         }
@@ -69,8 +68,8 @@ spec:
             steps {
                 container('docker') {
                     echo 'Docker Image Push'    // Docker Hub에 이미지 Push
-                    sh "docker push giry0612/djangotour:$BUILD_NUMBER"
-                    sh "docker push giry0612/djangotour:latest"
+                    //sh "docker push giry0612/djangotour:$BUILD_NUMBER"
+                    //sh "docker push giry0612/djangotour:latest"
                 }
             }
         }
@@ -78,6 +77,7 @@ spec:
             steps {
                 container('kubectl') {  // 위에서 생성한 Pod의 kubectl 컨테이너에서 실행
                     echo 'Deploy to Kubernetes' // 기존의 django deployment의 이미지를 새로 빌드한 이미지로 수정
+                    sh "kubectl get all -n jenkins"
                     sh "kubectl get all"
                     sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER -n default --record"
                 }
