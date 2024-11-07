@@ -21,7 +21,9 @@ spec:
     image: lachlanevenson/k8s-kubectl:latest
     tty: true
     commnad:
-    - cat
+      - "kubectl"
+      - "get"
+      - "all"
 """
         }
     }
