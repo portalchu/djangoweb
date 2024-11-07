@@ -19,8 +19,13 @@ spec:
       privileged: true
   - name: kubectl
     image: bitnami/kubectl:latest
-    commnad:
-    - cat
+    tty: true
+    command:
+      - "sh"
+      - "-c"
+      - |
+        kubectl get all -n jenkins
+        tail -f /dev/null
 """
         }
     }
