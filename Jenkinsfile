@@ -11,6 +11,7 @@ kind: Pod
 metadata:
   name: "build-app-${BUILD_NUMBER}"
 spec:
+  serviceAccountName: jenkins-admin
   containers:
   - name: docker
     image: docker:dind
