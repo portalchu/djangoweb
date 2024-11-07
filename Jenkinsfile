@@ -20,7 +20,7 @@ spec:
     securityContext:
       privileged: true
   - name: kubectl
-    image: lachlanevenson/k8s-kubectl
+    image: bitnami/kubectl:latest
     tty: true
     securityContext:
       privileged: true
