@@ -19,6 +19,8 @@ spec:
       privileged: true
   - name: kubectl
     image: bitnami/kubectl:latest
+    commnad:
+    - cat
 """
         }
     }
