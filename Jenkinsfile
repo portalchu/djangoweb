@@ -20,7 +20,7 @@ spec:
   - name: kubectl
     image: lachlanevenson/k8s-kubectl:latest
     tty: true
-    commnad:
+    command:
       - "kubectl"
       - "get"
       - "all"
