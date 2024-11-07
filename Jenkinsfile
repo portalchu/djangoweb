@@ -33,7 +33,6 @@ spec:
         // docker push를 위한 docker hub 로그인용 Credentials
         // 사용 전 Jenkins에서 설정 필요
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
-        SECRET_TOKEN = credentials('a84bd8da-8f8a-4f04-83a5-c2ddd04db567')
     }
     stages {
         stage('Git Clone') {    // GitHub에서 정보를 가져온다.
