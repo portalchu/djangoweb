@@ -8,10 +8,6 @@ pipeline {
             yaml"""
 apiVersion: v1
 kind: Pod
-metadata:
-  labels:
-    jenkins-build: app-build
-    some-label: "build-app-${BUILD_NUMBER}"
 spec:
   containers:
   - name: docker
