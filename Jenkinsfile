@@ -35,6 +35,14 @@ spec:
         DOCKERHUB_CREDENTIALS = credentials('dockerCredentials') 
     }
     stages {
+        stage('test pod') {
+            steps {
+                container('kubectl') {
+                    echo 'test pod'
+                    sh 'kubectl get all'
+                }
+            }
+        }
         stage('Git Clone') {    // GitHub에서 정보를 가져온다.
             steps {
                 container('docker') {   // 위에서 생성한 Pod의 docker 컨테이너에서 실행
