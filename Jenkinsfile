@@ -79,7 +79,7 @@ spec:
                 container('kubectl') {  // 위에서 생성한 Pod의 kubectl 컨테이너에서 실행
                     echo 'Deploy to Kubernetes' // 기존의 django deployment의 이미지를 새로 빌드한 이미지로 수정
                     sh "kubectl get --help"
-                    sh "kubectl get all -n jenkins"
+                    //sh "kubectl get all -n jenkins"
                     sh "kubectl get all"
                     sh "kubectl set image deployment/django django-app=giry0612/djangotour:$BUILD_NUMBER -n default --record"
                 }
