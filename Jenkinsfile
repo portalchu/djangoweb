@@ -8,6 +8,8 @@ pipeline {
             yaml"""
 apiVersion: v1
 kind: Pod
+metadata:
+  name: "build-app-${BUILD_NUMBER}"
 spec:
   containers:
   - name: docker
